@@ -93,6 +93,45 @@ window.ownerProfile = {
   */  
 projects: [
   {
+    id: "kunal-exe-coffee",
+    name: "Kunal Exe Coffee – Premium Coffee Store",
+    client: "Kunal Exe Coffee (Demo Project)",
+    category: "E-commerce Website",
+    dates: "November 2026",
+
+    problem:
+      "Small coffee brands need an online store that looks premium and lets customers order easily, without the cost of a complex payment system.",
+
+    intervention:
+      "Designed and built a multi-page coffee store with a cinematic hero, product collection, a 'Bean to Cup' storytelling section, a cart, and order sending through WhatsApp or email.",
+
+    outcome:
+      "A complete demo storefront with product pages, a blog and a simple WhatsApp/email ordering flow, responsive on desktop and mobile.",
+
+    outcomeStatus: "illustrative",
+
+    url: "https://coffe-kunal-exe-yzjp.vercel.app",
+
+    image: "assets/projects/kunal-exe-coffee.png",
+
+    images: [
+      "assets/projects/kunal-exe-coffee.png",
+      "assets/projects/kunal-exe-coffee-080841.png",
+      "assets/projects/kunal-exe-coffee-080904.png"
+    ],
+
+    stack: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Vite",
+      "Responsive Design",
+      "WhatsApp Ordering"
+    ],
+
+    featured: true
+  },
+  {
     id: "luxury-watch-maison",
     name: "Luxury Watches – Brand Experience",
     client: "Lucknowi Nawab (Concept Project)",

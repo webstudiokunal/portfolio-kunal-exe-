@@ -4,12 +4,13 @@
   "use strict";
   var cv = document.getElementById("waterCanvas");
   if (!cv || !cv.getContext) return;
+  var mobile = window.matchMedia("(max-width: 980px)");
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { cv.style.display = "none"; return; }
   var ctx = cv.getContext("2d");
   var SCALE = window.innerWidth < 700 ? 4 : 5;     // screen pixels per simulation cell
   var DAMP = 0.986, W = 0, H = 0, cur, prev, img, data;
   var pointer = { x: -1, y: -1, px: -1, py: -1, moved: false };
-  var nextRain = 0;
+  var nextRain = 0, raf = 0, active = false;
 
   function init() {
     var w = window.innerWidth, h = window.innerHeight;
@@ -38,7 +39,32 @@
   window.addEventListener("pointermove", onMove, { passive: true });
   window.addEventListener("pointerdown", function (e) { var g = toGrid(e.clientX, e.clientY); drop(g[0], g[1], 5, 70); }, { passive: true });
   window.addEventListener("pointerleave", function () { pointer.x = -1; pointer.moved = false; }, { passive: true });
-  window.addEventListener("resize", init);
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    active = false;
+    cv.style.display = "none";
+  }
+
+  function start() {
+    if (mobile.matches || document.hidden) { stop(); return; }
+    cv.style.display = "block";
+    init();
+    active = true;
+    if (!raf) raf = requestAnimationFrame(frame);
+  }
+
+  function resize() {
+    if (mobile.matches) { stop(); return; }
+    if (active) init();
+    else start();
+  }
+
+  window.addEventListener("resize", resize);
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stop();
+    else start();
+  });
 
   function step() {
     var i, y, x, n, t;
@@ -79,9 +105,8 @@
       nextRain = now + 900 + Math.random() * 1800;
     }
     step(); paint();
-    requestAnimationFrame(frame);
+    raf = requestAnimationFrame(frame);
   }
 
-  init();
-  requestAnimationFrame(frame);
+  start();
 })();
